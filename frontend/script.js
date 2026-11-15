@@ -1,3 +1,4 @@
+
 const chat=document.getElementById('chat');
 const input=document.getElementById('msg');
 document.getElementById('send').onclick=()=>{
