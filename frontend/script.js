@@ -1,39 +1,4 @@
-window.kalkiAssistantState = window.kalkiAssistantState || "idle";
-.kalkiVoiceState = window.kalkiVoiceState || { active: false, listening: false, processing: false, status: "" };
-function publishKalkiAssistantState(state) {
-    window.kalkiAssistantState = state;
-    window.dispatchEvent(new CustomEvent("kalki:assistant-state", { detail: { state } }));
-    if (state === "solving") window.ensureKalkiEffects?.();
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    const chatBox = document.getElementById("chat");
-    const messageInput = document.getElementById("msg");
-    const sendButton = document.getElementById("send");
-    const clearButton = document.getElementById("clear-btn");
-    const micButton = document.getElementById("mic-btn");
-    const settingsToggle = document.getElementById("settings-toggle");
-    const voiceSettings = document.getElementById("voice-settings");
-    const apiKeyInput = document.getElementById("gemini-api-key");
-    const apiKeyStatus = document.getElementById("gemini-key-status");
-    const apiKeySettings = document.getElementById("gemini-api-settings");
-    const saveApiKeyButton = document.getElementById("save-api-key");
-    const clearApiKeyButton = document.getElementById("clear-api-key");
-    const ttsAutoRead = document.getElementById("tts-auto-read");
-    const ttsStopButton = document.getElementById("tts-stop-button");
-    const ttsStatus = document.getElementById("tts-status");
-    const ttsVoiceSelect = document.getElementById("tts-voice-select");
-    const ttsVoiceHelp = document.getElementById("tts-voice-help");
-    const voiceInputLanguage = document.getElementById("voice-input-language");
-    const voiceModeStatus = document.getElementById("voice-mode-status");
-    const desktopPairCodeInput = document.getElementById("desktop-pair-code");
-    const desktopPairButton = document.getElementById("desktop-pair-button");
-    const desktopUnpairButton = document.getElementById("desktop-unpair-button");
-    const desktopAgentStatus = document.getElementById("desktop-agent-status");
-
-    const MEMORY_KEY = "jarvis_chat_memory";
-    const TTS_AUTO_READ_KEY = "kalki.tts.autoRead";
-    const TTS_VOICE_KEY = "kalki.tts.voiceURI";
+tts.voiceURI";
     const VOICE_INPUT_LANGUAGE_KEY = "kalki.voice.inputLanguage";
     const VOICE_STOP_PHRASES = new Set([
         "stop", "stop voice", "stop voice chat", "stop voice mode", "stop listening", "stop talking", "end voice chat", "end conversation", "voice off", "turn off voice", "turn off voice chat", "pause voice", "pause voice chat", "cancel voice", "cancel voice chat", "quit voice", "quit voice chat", "goodbye", "that's all", "that's enough",
