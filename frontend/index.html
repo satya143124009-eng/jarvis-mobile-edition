@@ -1,72 +1,30 @@
-
-div>
-  </div>
-
-  <aside class="side-sheet" aria-label="Navigation">
-    <button class="sheet-close" type="button" aria-label="Close menu">×</button>
-    <p class="eyebrow">KALKI</p><h2>Assistant</h2>
-    <button class="sheet-link" type="button">＋ New conversation</button>
-    <a class="sheet-link" href="connectors.html">◇ Connectors</a>
-    <a class="sheet-link" href="../" target="_blank" rel="noopener noreferrer" aria-label="Open the KALKI product website in a new tab">ⓘ KALKI product site ↗</a>
-    <a class="sheet-link" href="#kalki-effects-panel" id="kalki-effects-link">✧ KALKI Visual Effects</a>
-    <a class="sheet-link" href="#creator-agent-panel" id="creator-agent-link">✦ Creator Agent</a><a class="sheet-link" href="#social-agent-panel" id="social-agent-link">◎ Social Automation Agent</a><a class="sheet-link" href="#everyday-tools" id="tools-menu-link">⌁ Tools</a><button id="settings-toggle" class="sheet-link" type="button" aria-expanded="false">⚙ Settings</button>
-    <section id="voice-settings" class="voice-settings" hidden aria-label="Settings">
-      <section class="voice-output-settings" aria-labelledby="tts-settings-title">
-        <div class="voice-setting-heading"><strong id="tts-settings-title">Voice conversation</strong><small>Choose a consistent voice and how KALKI listens.</small></div>
-        <label class="api-key-label" for="tts-voice-select">KALKI speaking voice</label>
-        <select id="tts-voice-select" class="voice-select" aria-describedby="tts-voice-help"><option value="">Loading voices from this device…</option></select>
-        <p id="tts-voice-help" class="voice-setting-status">The chosen browser voice stays on this device. Voice availability depends on your browser.</p>
-        <label class="api-key-label" for="voice-input-language">Listening language</label>
-        <select id="voice-input-language" class="voice-select"><option value="en-IN">English (India)</option><option value="te-IN">Telugu (India)</option></select>
-        <p class="voice-setting-status">Microphone listens only while voice mode is on. Browser speech recognition may use the browser’s own speech service.</p>
-        <label class="kalki-toggle" for="tts-auto-read"><input id="tts-auto-read" type="checkbox"><span>Automatically read KALKI replies aloud in text chat</span></label>
-        <button id="tts-stop-button" class="voice-setting-button" type="button">Stop speaking</button>
-        <p id="tts-status" class="voice-setting-status" role="status" aria-live="polite">Use the speaker button on a reply, or enable automatic reading.</p>
-      </section>
-      <section class="desktop-agent-settings" aria-labelledby="desktop-agent-title">
-        <div class="voice-setting-heading"><strong id="desktop-agent-title">Desktop companion</strong><small>Connect a local agent to open approved apps on this computer.</small></div>
-        <p class="desktop-agent-note">This version only opens Calculator, Notes, or a blank browser tab after you approve. It cannot run terminal commands or read files.</p>
-        <label class="api-key-label" for="desktop-pair-code">One-time pairing code</label>
-        <input id="desktop-pair-code" class="api-key-input" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="8" pattern="[0-9]{8}" placeholder="8-digit code from the desktop agent">
-        <div class="api-key-actions"><button id="desktop-pair-button" type="button" class="api-key-save">Pair this desktop</button><button id="desktop-unpair-button" type="button" class="api-key-clear">Disconnect</button></div>
-        <p id="desktop-agent-status" class="api-key-status" role="status" aria-live="polite">Not paired in this browser session.</p>
-        <a class="api-key-link" href="../desktop-agent/README.md" target="_blank" rel="noopener noreferrer">Desktop agent setup and safety details ↗</a>
-      </section>
-      <section id="gemini-api-settings" class="api-key-settings" aria-labelledby="gemini-key-title">
-        <div class="api-key-heading"><strong id="gemini-key-title">Gemini API key</strong><small>Required for AI chat replies</small></div>
-        <label class="api-key-label" for="gemini-api-key">Google AI Studio key</label>
-        <input id="gemini-api-key" class="api-key-input" type="password" inputmode="text" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="100" aria-describedby="gemini-key-privacy gemini-key-status" placeholder="Paste your Gemini API key">
-        <p id="gemini-key-privacy" class="api-key-help">Saved only in this browser or device. When you ask KALKI for an AI reply, the key is sent directly from this page to Google’s Gemini API over HTTPS. It is not stored on KALKI’s server. Anyone with access to this browser profile may be able to access browser-local data.</p>
-        <p id="gemini-key-status" class="api-key-status" role="status" aria-live="polite">No key saved on this device.</p>
-        <div class="api-key-actions"><button id="save-api-key" type="button" class="api-key-save">Save key on this device</button><button id="clear-api-key" type="button" class="api-key-clear">Clear saved key</button></div>
-        <a class="api-key-link" href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer">Get a Gemini API key from Google AI Studio ↗</a>
-      </section>
-    </section>
-    <a class="sheet-link" href="admin.html">▣ Admin dashboard</a>
-  </aside>
-  <div class="sheet-backdrop"></div>
-
-  <script src="script.js?v=voice-conversation-1"></script>
-  <script src="advanced-intelligence.js"></script>
-  <script src="social-agent.js?v=local-preview-1"></script>
-  <script>
-    const kalkiEffectsPanel = document.getElementById('kalki-effects-panel');
-    const kalkiEffectsFrame = document.getElementById('kalki-effects-frame');
-    const kalkiEffectsError = document.getElementById('kalki-effects-load-error');
-    const kalkiEffectsLoading = document.getElementById('kalki-effects-loading');
-    let kalkiEffectsReady = false;
-    let kalkiEffectsFailed = false;
-    let kalkiEffectsLoadTimer = 0;
-    function sendKalkiEffectsState() {
-      const frameWindow = kalkiEffectsFrame?.contentWindow;
-      if (!frameWindow || kalkiEffectsFrame.getAttribute('src') === 'about:blank') return;
-      frameWindow.postMessage({
-        type: 'kalki-state',
-        assistantState: window.kalkiAssistantState || 'idle',
-        voiceState: {
-          active: Boolean(window.kalkiVoiceState?.active),
-          listening: Boolean(window.kalkiVoiceState?.listening),
-          processing: Boolean(window.kalkiVoiceState?.processing)
-        }
-
-    
+!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>J.A.R.V.I.S</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+ <header><h1>J.A.R.V.I.S</h1><p>MOBILE EDITION</p></header>
+ <div class="core">
+ <div class="ring r1"></div>
+ <div class="ring r2"></div>
+ <div class="center"></div>
+ </div>
+ <p class="core-text">CORE ACTIVE</p>
+ <div class="status">
+ <h2>SYSTEM STATUS</h2>
+ <div class="row"><span>AI CORE</span><b class="on">● ONLINE</b></div>
+ <div class="row"><span>NETWORK</span><b class="on">● ONLINE</b></div>
+ <div class="row"><span>VOICE</span><b class="off">○ LOCKED</b></div>
+ <div class="row"><span>MEMORY</span><b class="off">○ LOCKED</b></div>
+ </div>
+ <div class="chat" id="chat"></div>
+ <div class="input-area">
+ <input id="msg" placeholder="Ask J.A.R.V.I.S...">
+ <button id="send">SEND</button>
+ </div>
+ <script src="script.js"></script>
+</body>
