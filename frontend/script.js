@@ -1,5 +1,5 @@
 window.kalkiAssistantState = window.kalkiAssistantState || "idle";
-window.kalkiVoiceState = window.kalkiVoiceState || { active: false, listening: false, processing: false, status: "" };
+.kalkiVoiceState = window.kalkiVoiceState || { active: false, listening: false, processing: false, status: "" };
 function publishKalkiAssistantState(state) {
     window.kalkiAssistantState = state;
     window.dispatchEvent(new CustomEvent("kalki:assistant-state", { detail: { state } }));
