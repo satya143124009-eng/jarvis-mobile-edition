@@ -93,6 +93,8 @@ const server=http.createServer(async(req,res)=>{
   if(req.method==='OPTIONS') return json(res,204,{});
   const url=new URL(req.url,`http://${req.headers.host}`);
   if(req.method==='GET'&&url.pathname==='/api/health') return json(res,200,{ok:true,service:'jarvis-backend',explicitActionsOnly:true,backgroundReplies:false,whatsappBridge:Boolean(WPP_BRIDGE_URL&&WPP_BRIDGE_TOKEN),googleOAuth:true,skills:Object.keys(SKILLS),everydayTools:Object.keys(TOOL_REGISTRY)});
+  if(req.method==='GET'&&url.pathname==='/') return json(res, 200, {ok:true});
+
   if(req.method==='GET'&&url.pathname==='/api/interaction/brain') return json(res,200,{ok:true,capabilities:['acknowledgement','follow_up','clarification','emotion_tone','recent_context','opt_in_greeting_preview'],policy:INTERACTION.DEFAULT_POLICY,note:'No background messages or actions are performed.'});
   if(req.method==='POST'&&url.pathname==='/api/interaction/analyze') { const body=await readBody(req); return json(res,200,INTERACTION.analyze(body)); }
   if(req.method==='POST'&&url.pathname==='/api/interaction/greeting-preview') { const body=await readBody(req); return json(res,200,{ok:true,preview:INTERACTION.morningGreetingPreview(body)}); }
