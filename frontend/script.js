@@ -9,9 +9,9 @@ document.getElementById('send').onclick=()=>{
  add('J.A.R.V.I.S: Processing...','ai');
  setTimeout(()=>{
  chat.lastChild.innerText='J.A.R.V.I.S: Systems online. How may I assist you, Boss?';
-  const utterance=new SpeechSynthesisUtterance(chat.lastchild.innerText);\
+  const utterance=new SpeechSynthesisUtterance(chat.lastchild.innerText);
   window.speechSynthesis.speak(utterance);
- },1000)
+ },1000);
 };
 function add(text,who){
  const d=document.createElement('div');
