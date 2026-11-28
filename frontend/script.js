@@ -1,3 +1,4 @@
+const speechrecognition=window.speechrecognition||window.webSpeechRecognition;
 const chat=document.getElementById('chat');
 const input=document.getElementById('msg');
 document.getElementById('send').onclick=()=>{
@@ -8,6 +9,8 @@ document.getElementById('send').onclick=()=>{
  add('J.A.R.V.I.S: Processing...','ai');
  setTimeout(()=>{
  chat.lastChild.innerText='J.A.R.V.I.S: Systems online. How may I assist you, Boss?';
+  const utterance=new SpeechSynthesisUtterance(chat.lastchild.innerText);\
+  window.speechSynthesis.speak(utterance);
  },1000);
 };
 function add(text,who){
